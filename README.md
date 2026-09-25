@@ -57,7 +57,7 @@ Each route in `src/pages/` and `src/pages/ar/` is a thin wrapper around a view i
 ## Preview deployment (GitHub Pages)
 
 `.github/workflows/deploy-pages.yml` builds on every push to `develop` or the working branch and publishes
-`dist/` to the `gh-pages` branch. Live at **https://kumararab.github.io/BAB-AL-HIDAYA/**.
+`dist/` to the `gh-pages` branch. Live at **https://arabkumar.in/BAB-AL-HIDAYA/** (the account’s Pages custom domain; kumararab.github.io/BAB-AL-HIDAYA redirects there).
 One-time setup: *Settings → Pages → Build and deployment → Deploy from a branch → `gh-pages` / root*.
 
 ## Production deploy
