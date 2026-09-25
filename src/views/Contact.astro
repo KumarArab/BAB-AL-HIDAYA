@@ -64,6 +64,13 @@ const a = d.address;
                 {p.propertyTypes.map((pt) => <option>{pt}</option>)}
               </select>
             </label>
+            <label class="label">{f.basis} *
+              <select name="basis" required class="field">
+                <option value="">{p.select}</option>
+                {p.basisOptions.map((b) => <option>{b}</option>)}
+              </select>
+            </label>
+            <label class="label">{f.staff}<input name="staff" type="number" min="1" class="field" placeholder="1" dir="ltr" /></label>
             <label class="label sm:col-span-2">{f.location}<input name="location" class="field" placeholder={p.locationPh} /></label>
             <label class="label sm:col-span-2">{f.message}<textarea name="message" rows="4" class="field" placeholder={p.messagePh}></textarea></label>
             <div class="flex flex-wrap gap-3 sm:col-span-2">

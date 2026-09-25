@@ -68,7 +68,7 @@ const rows: [string, string, boolean?][] = [
             <span class="icon-tile"><Icon name="shield" /></span>
             <h3 class="mt-4 font-bold">{a.title}</h3>
             <p class="mt-2 text-sm text-muted">{a.detail}</p>
-            <p class="mt-4 text-xs font-semibold text-teal-600">{d.common.ref} <span dir="ltr">{approvalRefs[i]}</span></p>
+            {approvalRefs[i] && <p class="mt-4 text-xs font-semibold text-teal-600">{d.common.ref} <span dir="ltr">{approvalRefs[i]}</span></p>}
           </div>
         ))}
       </div>

@@ -78,7 +78,7 @@ const reasonIcons = ['shield', 'clock', 'users', 'doc'] as const;
         <a href={link(lang, '/services')} class="btn btn-outline shrink-0">{d.common.allServices}</a>
       </div>
       <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((s) => (
+        {services.slice(0, 6).map((s) => (
           <a href={link(lang, `/services/${s.slug}`)} class="group flex flex-col overflow-hidden rounded-xl border border-line bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
             <div class="relative h-48 overflow-hidden">
               <img src={asset(s.image)} alt={s.title} loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
@@ -91,6 +91,23 @@ const reasonIcons = ['shield', 'clock', 'users', 'doc'] as const;
               <span class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-teal-600">{d.common.learnMore} <Icon name="arrow" class="h-4 w-4" /></span>
             </div>
           </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEXIBLE HIRING -->
+  <section class="section">
+    <div class="container-x">
+      <SectionHead eyebrow={h.flexEyebrow} title={h.flexTitle} lead={h.flexLead} center />
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {h.flexPlans.map((pl, i) => (
+          <div class:list={['relative flex flex-col rounded-2xl border p-6 transition hover:-translate-y-1 hover:shadow-xl', i === 3 ? 'border-navy-900 bg-navy-900 text-white' : 'border-line bg-white']}>
+            <span class:list={['self-start rounded-full px-3 py-1 text-xs font-semibold', i === 3 ? 'bg-gold-500 text-navy-950' : 'bg-teal-50 text-teal-600']}>{pl.tag}</span>
+            <h3 class:list={['mt-5 font-display text-2xl font-extrabold', i === 3 && 'text-white']}>{pl.title}</h3>
+            <p class:list={['mt-2 flex-1 text-sm leading-relaxed', i === 3 ? 'text-white/75' : 'text-muted']}>{pl.text}</p>
+            <a href={whatsappLink(`${d.common.waDefault} (${pl.title})`)} target="_blank" rel="noopener" class:list={['btn mt-6', i === 3 ? 'btn-primary' : 'btn-outline']}><Icon name="whatsapp" class="h-4 w-4" /> {h.flexCta}</a>
+          </div>
         ))}
       </div>
     </div>

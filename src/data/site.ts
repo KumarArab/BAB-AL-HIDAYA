@@ -19,13 +19,13 @@ export const company = {
 };
 
 export const contact = {
-  phone: '+971 4 123 4567',
-  phoneHref: 'tel:+97141234567',
+  phone: '+971 6 123 4567',
+  phoneHref: 'tel:+97161234567',
   mobile: '+971 50 123 4567',
   whatsapp: '971501234567', // digits only, used for wa.me links
   email: 'info@babalhidaya.ae',
   careersEmail: 'careers@babalhidaya.ae',
-  mapEmbed: 'https://www.google.com/maps?q=Al+Qusais+Industrial+Area+2,+Dubai&output=embed',
+  mapEmbed: 'https://www.google.com/maps?q=Al+Jurf+Industrial+Area+2,+Ajman&output=embed',
 };
 
 export const registration = {
@@ -34,11 +34,11 @@ export const registration = {
   chamberNo: '000123456',
 };
 
-export const approvalRefs = ['DM-PHS-2020-00000', 'DCD-FLS-00000', 'DM-ENV-00000'];
+export const approvalRefs = ['AMPD-PH-2020-00000', 'MOHRE-EST-0000000', ''];
 
 export const certificationCodes = ['ISO 9001:2015', 'ISO 14001:2015', 'ISO 45001:2018'];
 
-export const statValues = [`${new Date().getFullYear() - company.founded}+`, '120+', '85+', '24/7'];
+export const statValues = [`${new Date().getFullYear() - company.founded}+`, '120+', '85+', '7'];
 
 export const hseKpiValues = ['0', '1.2M', '100%', '96%'];
 

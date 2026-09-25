@@ -7,6 +7,7 @@ export type IconName =
 
 /** Language-neutral service metadata; text lives in src/i18n/{en,ar}.ts in the same order. */
 const serviceMeta: { slug: string; icon: IconName; image: string }[] = [
+  { slug: 'cleaners-technicians-on-demand', icon: 'users', image: '/images/team-walking.jpg' },
   { slug: 'building-maintenance', icon: 'wrench', image: '/images/electrician.jpg' },
   { slug: 'annual-maintenance-contracts', icon: 'contract', image: '/images/contract-handshake.jpg' },
   { slug: 'hvac-ac-maintenance', icon: 'snow', image: '/images/hvac.jpg' },
