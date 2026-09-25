@@ -4,41 +4,50 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
 import { company, contact, isSampleData, whatsappLink } from '../data/site';
+import { t, dir, link, asset, routeOf, type Lang } from '../i18n/utils';
 
-interface Props { title?: string; description?: string }
-const { title, description = company.shortPitch } = Astro.props;
-const fullTitle = title ? `${title} | ${company.name}` : `${company.name} | ${company.tagline} in Dubai`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+interface Props { lang: Lang; title?: string; description?: string }
+const { lang, title } = Astro.props;
+const d = t(lang);
+const description = Astro.props.description ?? d.company.shortPitch;
+const fullTitle = title ? `${title} | ${d.company.name}` : `${d.company.name} | ${d.meta.titleSuffix}`;
+const route = routeOf(Astro.url.pathname);
+const abs = (l: Lang) => new URL(link(l, route), Astro.site).toString();
 
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: company.legalName,
-  url: Astro.site?.toString(),
+  name: t('en').company.legalName,
+  alternateName: t('ar').company.legalName,
+  url: abs('en'),
   telephone: contact.phone,
   email: contact.email,
   foundingDate: String(company.founded),
   address: {
     '@type': 'PostalAddress',
-    streetAddress: `${contact.address.line1}, ${contact.address.line2}`,
-    addressLocality: contact.address.city,
+    streetAddress: `${t('en').address.line1}, ${t('en').address.line2}`,
+    addressLocality: 'Dubai',
     addressCountry: 'AE',
   },
   areaServed: 'United Arab Emirates',
 };
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang} dir={dir(lang)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={abs(lang)} />
+    <link rel="alternate" hreflang="en" href={abs('en')} />
+    <link rel="alternate" hreflang="ar" href={abs('ar')} />
+    <link rel="alternate" hreflang="x-default" href={abs('en')} />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_AE' : 'en_AE'} />
     <meta name="theme-color" content="#0b2545" />
     {isSampleData && <meta name="robots" content="noindex, nofollow" />}
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
@@ -46,15 +55,15 @@ const orgSchema = {
   <body class="flex min-h-screen flex-col">
     {isSampleData && (
       <div class="no-print bg-gold-50 text-center text-xs text-navy-900">
-        <p class="container-x py-2"><strong>Preview:</strong> licence numbers, people, figures and contact details on this site are sample data and will be replaced with verified company information before launch.</p>
+        <p class="container-x py-2"><strong>{d.common.preview}</strong> {d.common.previewText}</p>
       </div>
     )}
-    <Header />
+    <Header lang={lang} />
     <main class="flex-1"><slot /></main>
-    <Footer />
+    <Footer lang={lang} />
 
-    <a href={whatsappLink()} target="_blank" rel="noopener" aria-label="Chat on WhatsApp"
-      class="no-print fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105">
+    <a href={whatsappLink(d.common.waDefault)} target="_blank" rel="noopener" aria-label={d.common.chatWhatsapp}
+      class="no-print fixed bottom-5 end-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105">
       <Icon name="whatsapp" class="h-7 w-7" />
     </a>
   </body>

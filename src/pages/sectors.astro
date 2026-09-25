@@ -1,25 +1,4 @@
 ---
-import Base from '../layouts/Base.astro';
-import PageHero from '../components/PageHero.astro';
-import Icon from '../components/Icon.astro';
-import CtaBand from '../components/CtaBand.astro';
-import { sectors } from '../data/site';
+import View from '../views/Sectors.astro';
 ---
-<Base title="Sectors We Serve" description="Building maintenance and cleaning for residential, commercial, retail, hospitality, education, industrial and healthcare properties in the UAE.">
-  <PageHero eyebrow="Sectors" title="Maintenance and cleaning for every type of property" subtitle="Each sector has its own risks, schedules and standards. Our service plans are built around them." crumbs={[{ label: 'Sectors' }]} />
-  <section class="section">
-    <div class="container-x grid gap-6 md:grid-cols-2">
-      {sectors.map((s, i) => (
-        <div class="card flex gap-5">
-          <span class="icon-tile shrink-0"><Icon name="building" /></span>
-          <div>
-            <p class="text-xs font-bold text-gold-500">{String(i + 1).padStart(2, '0')}</p>
-            <h2 class="mt-1 text-lg font-bold">{s.title}</h2>
-            <p class="mt-2 text-sm text-muted">{s.text}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-  <CtaBand />
-</Base>
+<View lang="en" />

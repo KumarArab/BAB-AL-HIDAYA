@@ -1,44 +1,48 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { company, contact, registration, whatsappLink } from '../data/site';
-import { services } from '../data/services';
+import { contact, registration, whatsappLink } from '../data/site';
+import { getServices } from '../data/services';
+import { t, link, type Lang } from '../i18n/utils';
 
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const services = getServices(lang);
 const year = new Date().getFullYear();
+const c = d.common.comma;
+const companyLinks = [
+  ['/about', d.nav.aboutUs], ['/leadership', d.nav.leadership], ['/licences', d.nav.licences], ['/hse', d.nav.hse],
+  ['/projects', d.nav.projects], ['/careers', d.nav.careers], ['/company-profile', d.nav.profile],
+];
 ---
 <footer class="bg-navy-950 text-white/70">
   <div class="container-x grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
     <div>
-      <Logo light />
-      <p class="mt-4 text-sm leading-relaxed">{company.shortPitch}</p>
+      <Logo lang={lang} light />
+      <p class="mt-4 text-sm leading-relaxed">{d.company.shortPitch}</p>
     </div>
 
     <div>
-      <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Services</h3>
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-white">{d.common.footerServices}</h3>
       <ul class="mt-4 space-y-2 text-sm">
-        {services.map((s) => <li><a href={`/services/${s.slug}`} class="hover:text-gold-400">{s.title}</a></li>)}
+        {services.map((s) => <li><a href={link(lang, `/services/${s.slug}`)} class="hover:text-gold-400">{s.title}</a></li>)}
       </ul>
     </div>
 
     <div>
-      <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Company</h3>
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-white">{d.common.footerCompany}</h3>
       <ul class="mt-4 space-y-2 text-sm">
-        <li><a href="/about" class="hover:text-gold-400">About Us</a></li>
-        <li><a href="/leadership" class="hover:text-gold-400">Leadership</a></li>
-        <li><a href="/licences" class="hover:text-gold-400">Licences &amp; Compliance</a></li>
-        <li><a href="/hse" class="hover:text-gold-400">HSE &amp; Quality</a></li>
-        <li><a href="/projects" class="hover:text-gold-400">Projects</a></li>
-        <li><a href="/careers" class="hover:text-gold-400">Careers</a></li>
-        <li><a href="/company-profile" class="hover:text-gold-400">Company Profile</a></li>
+        {companyLinks.map(([r, l]) => <li><a href={link(lang, r)} class="hover:text-gold-400">{l}</a></li>)}
       </ul>
     </div>
 
     <div>
-      <h3 class="text-sm font-semibold uppercase tracking-wider text-white">Contact</h3>
+      <h3 class="text-sm font-semibold uppercase tracking-wider text-white">{d.common.footerContact}</h3>
       <ul class="mt-4 space-y-3 text-sm">
-        <li class="flex gap-2"><Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" /><span>{contact.address.line1}, {contact.address.line2}<br />{contact.address.poBox}, {contact.address.city}, UAE</span></li>
-        <li class="flex gap-2"><Icon name="phone" class="h-4 w-4 shrink-0 text-gold-400" /><a href={contact.phoneHref} class="hover:text-white">{contact.phone}</a></li>
-        <li class="flex gap-2"><Icon name="whatsapp" class="h-4 w-4 shrink-0 text-gold-400" /><a href={whatsappLink()} target="_blank" rel="noopener" class="hover:text-white">{contact.mobile}</a></li>
+        <li class="flex gap-2"><Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" /><span>{d.address.line1}{c}{d.address.line2}<br />{d.address.poBox}{c}{d.address.city}{c}{d.address.short}</span></li>
+        <li class="flex gap-2"><Icon name="phone" class="h-4 w-4 shrink-0 text-gold-400" /><a href={contact.phoneHref} class="hover:text-white" dir="ltr">{contact.phone}</a></li>
+        <li class="flex gap-2"><Icon name="whatsapp" class="h-4 w-4 shrink-0 text-gold-400" /><a href={whatsappLink(d.common.waDefault)} target="_blank" rel="noopener" class="hover:text-white" dir="ltr">{contact.mobile}</a></li>
         <li class="flex gap-2"><Icon name="mail" class="h-4 w-4 shrink-0 text-gold-400" /><a href={`mailto:${contact.email}`} class="hover:text-white">{contact.email}</a></li>
       </ul>
     </div>
@@ -46,8 +50,8 @@ const year = new Date().getFullYear();
 
   <div class="border-t border-white/10">
     <div class="container-x flex flex-col gap-2 py-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
-      <p>© {year} {company.legalName}. All rights reserved.</p>
-      <p>Trade Licence No. {registration.tradeLicenceNo} (DET Dubai) · TRN {registration.vatTrn}</p>
+      <p>© {year} {d.company.legalName}. {d.common.rights}</p>
+      <p>{d.common.licenceShort(registration.tradeLicenceNo)} · {d.common.trn} {registration.vatTrn}</p>
     </div>
   </div>
 </footer>

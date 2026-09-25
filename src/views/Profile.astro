@@ -1,0 +1,150 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { company, contact, registration, approvalRefs, certificationCodes, statValues, isSampleData } from '../data/site';
+import { getServices } from '../data/services';
+import { t, dir, link, asset, type Lang } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const p = d.profile;
+const r = d.registration;
+const a = d.address;
+const c = d.common.comma;
+const services = getServices(lang);
+---
+<!doctype html>
+<html lang={lang} dir={dir(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{p.title} | {d.company.name}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href={asset('/favicon.svg')} type="image/svg+xml" />
+    <style>
+      @page { size: A4; margin: 14mm; }
+      @media print { .sheet { box-shadow: none !important; margin: 0 !important; padding: 0 !important; } .page-break { break-before: page; } }
+    </style>
+  </head>
+  <body class="bg-mist py-8 print:bg-white print:py-0">
+    <div class="no-print mx-auto mb-4 flex max-w-4xl items-center justify-between px-4">
+      <a href={link(lang)} class="text-sm font-medium text-teal-600">{p.back}</a>
+      <button onclick="window.print()" class="btn btn-dark">{p.print}</button>
+    </div>
+    {isSampleData && <p class="no-print mx-auto mb-4 max-w-4xl px-4 text-xs text-muted">{p.preview}</p>}
+
+    <article class="sheet mx-auto max-w-4xl overflow-hidden bg-white shadow-lg">
+      <!-- Cover band -->
+      <div class="relative h-48 print:h-40">
+        <img src={asset('/images/hero-dubai-night.jpg')} alt="" class="absolute inset-0 h-full w-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-r from-navy-950/95 to-navy-900/60 rtl:bg-gradient-to-l"></div>
+        <div class="relative flex h-full items-end justify-between p-8 sm:p-12">
+          <Logo lang={lang} light />
+          <div class="text-end text-xs text-white/80">
+            <p class="font-semibold text-gold-400">{p.title} {new Date().getFullYear()}</p>
+            <p>{company.domain}</p>
+          </div>
+        </div>
+        <div class="absolute inset-x-0 bottom-0 h-1 bg-gold-500"></div>
+      </div>
+
+      <div class="p-8 sm:p-12">
+        <section>
+          <h1 class="text-3xl font-extrabold">{d.company.legalName}</h1>
+          <p class="mt-1 text-sm text-muted" dir={lang === 'ar' ? 'ltr' : 'rtl'}>{d.company.legalNameAlt}</p>
+          <p class="mt-4 leading-relaxed text-ink">{d.company.shortPitch} {p.intro(company.founded, r.issuingAuthority)}</p>
+          <div class="mt-6 grid grid-cols-4 gap-3">
+            {statValues.map((v, i) => (
+              <div class="rounded-lg bg-mist p-3 text-center"><p class="font-display text-2xl font-extrabold text-navy-900" dir="ltr">{v}</p><p class="text-[11px] text-muted">{d.stats[i]}</p></div>
+            ))}
+          </div>
+        </section>
+
+        <section class="mt-8">
+          <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s1}</h2>
+          <table class="mt-3 w-full text-sm">
+            <tbody class="divide-y divide-line">
+              <tr><td class="w-1/3 py-2 text-muted">{d.licencesPage.rows.form}</td><td class="py-2 font-medium">{r.legalForm}</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.licence}</td><td class="py-2 font-medium">{registration.tradeLicenceNo} ({r.licenceType})</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.authority}</td><td class="py-2 font-medium">{r.issuingAuthority}</td></tr>
+              <tr><td class="py-2 text-muted">{p.validity}</td><td class="py-2 font-medium">{r.licenceIssued} {p.to} {r.licenceExpiry}</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.trn}</td><td class="py-2 font-medium">{registration.vatTrn}</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.chamber}</td><td class="py-2 font-medium">{r.chamber(registration.chamberNo)}</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.office}</td><td class="py-2 font-medium">{a.line1}{c}{a.line2}{c}{a.poBox}{c}{a.city}{c}{a.short}</td></tr>
+            </tbody>
+          </table>
+          <p class="mt-3 text-xs text-muted"><strong class="text-navy-900">{p.activitiesLabel}</strong> {r.activities.join(' · ')}</p>
+        </section>
+
+        <section class="mt-8">
+          <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s2}</h2>
+          <div class="mt-3 grid grid-cols-2 gap-4">
+            {services.map((s) => (
+              <div class="flex gap-3 rounded-lg border border-line p-3">
+                <img src={asset(s.image)} alt="" class="h-16 w-16 shrink-0 rounded-md object-cover" />
+                <div>
+                  <h3 class="text-sm font-bold">{s.title}</h3>
+                  <p class="mt-1 text-xs text-muted">{s.items.slice(0, 3).join(' · ')}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section class="page-break mt-8">
+          <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s3}</h2>
+          <div class="mt-3 grid grid-cols-2 gap-4">
+            {d.leadership.map((m) => (
+              <div class="rounded-lg border border-line p-4">
+                <p class="text-sm font-bold">{m.name}</p>
+                <p class="text-xs font-semibold text-teal-600">{m.role}</p>
+                <p class="mt-1 text-xs text-muted">{m.bio}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section class="mt-8 grid grid-cols-2 gap-8">
+          <div>
+            <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s4}</h2>
+            <ul class="mt-3 space-y-2 text-sm">
+              {d.approvals.map((ap, i) => <li><span class="font-medium">{ap.title}</span><br /><span class="text-xs text-muted">{ap.detail} {d.common.ref} <span dir="ltr">{approvalRefs[i]}</span></span></li>)}
+              {certificationCodes.map((code, i) => <li><span class="font-medium" dir="ltr">{code}</span>: <span class="text-muted">{d.certifications[i]}</span></li>)}
+            </ul>
+          </div>
+          <div>
+            <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s5}</h2>
+            <ul class="mt-3 space-y-2 text-sm">
+              {d.insurance.map((ins) => <li><span class="font-medium">{ins.type}</span><br /><span class="text-xs text-muted">{ins.cover}</span></li>)}
+            </ul>
+          </div>
+        </section>
+
+        <section class="mt-8">
+          <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s6}</h2>
+          <p class="mt-3 text-xs text-muted">{d.sectors.map((s) => s.title).join(' · ')}</p>
+          <table class="mt-3 w-full text-xs">
+            <thead><tr class="bg-navy-900 text-start text-white"><th class="p-2 text-start">{p.thProperty}</th><th class="p-2 text-start">{p.thLocation}</th><th class="p-2 text-start">{p.thScope}</th><th class="p-2 text-start">{p.thPeriod}</th></tr></thead>
+            <tbody class="divide-y divide-line">
+              {d.projects.map((pr) => <tr><td class="p-2 font-medium">{pr.title}</td><td class="p-2">{pr.location}</td><td class="p-2 text-muted">{pr.scope}</td><td class="p-2">{pr.duration}</td></tr>)}
+            </tbody>
+          </table>
+        </section>
+
+        <section class="mt-8">
+          <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s7}</h2>
+          <div class="mt-3 grid grid-cols-4 gap-3">
+            {d.values.map((v) => <div class="rounded-lg bg-mist p-3"><p class="text-sm font-bold">{v.title}</p><p class="mt-1 text-[11px] text-muted">{v.text}</p></div>)}
+          </div>
+        </section>
+
+        <footer class="mt-10 flex flex-wrap justify-between gap-4 border-t-4 border-gold-500 pt-4 text-xs text-muted">
+          <span dir="ltr">{contact.phone} · {contact.email}</span>
+          <span>{company.domain}</span>
+          <span>{d.common.licenceShort(registration.tradeLicenceNo)} · {d.common.trn} {registration.vatTrn}</span>
+        </footer>
+      </div>
+    </article>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { t, type Lang } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const p = d.leadershipPage;
+const initials = (name: string) => name.split(' ').filter((_, i, a) => i === 0 || i === a.length - 1).map((w) => w[0]).join(lang === 'ar' ? ' ' : '');
+---
+<Base lang={lang} title={p.title} description={p.description}>
+  <PageHero lang={lang} eyebrow={p.eyebrow} title={p.heading} subtitle={p.subtitle} image="/images/office.jpg" crumbs={[{ label: d.nav.about, route: '/about' }, { label: p.title }]} />
+
+  <section class="section">
+    <div class="container-x grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {d.leadership.map((m) => (
+        <article class="card overflow-hidden p-0">
+          <div class="flex h-40 items-center justify-center bg-gradient-to-br from-navy-900 to-navy-700">
+            <div class="flex h-24 w-24 items-center justify-center rounded-full border-4 border-gold-500/60 bg-navy-950 font-display text-2xl font-bold text-gold-400">{initials(m.name)}</div>
+          </div>
+          <div class="p-6">
+            <h2 class="text-lg font-bold">{m.name}</h2>
+            <p class="text-sm font-semibold text-teal-600">{m.role}</p>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{m.bio}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section bg-mist">
+    <div class="container-x">
+      <SectionHead eyebrow={p.orgEyebrow} title={p.orgTitle} lead={p.orgLead} />
+      <div class="mt-10 flex justify-center">
+        <div class="rounded-lg bg-navy-900 px-6 py-3 text-center text-white shadow-lg"><p class="text-xs text-white/60">{p.mdTop}</p><p class="font-bold">{p.mdBottom}</p></div>
+      </div>
+      <div class="mx-auto h-8 w-px bg-line"></div>
+      <div class="grid gap-4 md:grid-cols-4">
+        {p.org.map((o) => (
+          <div class="rounded-xl border-t-4 border-t-teal-600 bg-white p-5 shadow-sm">
+            <p class="font-bold text-navy-900">{o.dept}</p>
+            <p class="text-xs font-semibold text-teal-600">{o.lead}</p>
+            <p class="mt-3 text-sm text-muted">{o.teams}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Base>

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { t, type Lang } from '../i18n/utils';
+import type { IconName } from '../data/services';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const p = d.sectorsPage;
+const icons: IconName[] = ['building', 'doc', 'star', 'users', 'check', 'hardhat', 'pin', 'shield'];
+---
+<Base lang={lang} title={p.title} description={p.description}>
+  <PageHero lang={lang} eyebrow={p.eyebrow} title={p.heading} subtitle={p.subtitle} image="/images/dubai-aerial.jpg" crumbs={[{ label: d.nav.sectors }]} />
+  <section class="section">
+    <div class="container-x grid gap-6 md:grid-cols-2">
+      {d.sectors.map((s, i) => (
+        <div class="card flex gap-5 transition hover:-translate-y-0.5 hover:border-teal-500">
+          <span class="icon-tile shrink-0"><Icon name={icons[i]} /></span>
+          <div>
+            <p class="text-xs font-bold text-gold-500">{String(i + 1).padStart(2, '0')}</p>
+            <h2 class="mt-1 text-lg font-bold">{s.title}</h2>
+            <p class="mt-2 text-sm text-muted">{s.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Base>

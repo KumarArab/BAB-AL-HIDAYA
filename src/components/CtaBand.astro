@@ -1,17 +1,22 @@
 ---
 import { contact, whatsappLink } from '../data/site';
-interface Props { title?: string; text?: string }
-const { title = 'Need a maintenance or cleaning partner you can rely on?', text = 'Book a free site survey. We will assess your property and send a detailed proposal within 48 hours.' } = Astro.props;
+import { t, link, asset, type Lang } from '../i18n/utils';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang).common;
 ---
-<section class="no-print bg-teal-600">
-  <div class="container-x flex flex-col items-start justify-between gap-6 py-12 md:flex-row md:items-center">
-    <div>
-      <h2 class="text-2xl font-bold text-white sm:text-3xl">{title}</h2>
-      <p class="mt-2 max-w-2xl text-white/85">{text}</p>
+<section class="no-print relative overflow-hidden bg-teal-600">
+  <img src={asset('/images/team-walking.jpg')} alt="" loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+  <div class="absolute inset-0 bg-gradient-to-r from-teal-600 via-teal-600/95 to-teal-600/60 rtl:bg-gradient-to-l" aria-hidden="true"></div>
+  <div class="container-x relative flex flex-col items-start justify-between gap-8 py-16 md:flex-row md:items-center">
+    <div class="max-w-2xl">
+      <h2 class="text-2xl font-bold text-white sm:text-4xl">{d.ctaTitle}</h2>
+      <p class="mt-3 text-lg text-white/90">{d.ctaText}</p>
     </div>
     <div class="flex flex-wrap gap-3">
-      <a href="/contact#quote" class="btn btn-primary">Request a Quote</a>
-      <a href={whatsappLink()} target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp {contact.mobile}</a>
+      <a href={link(lang, '/contact#quote')} class="btn btn-primary">{d.requestQuote} <Icon name="arrow" class="h-4 w-4" /></a>
+      <a href={whatsappLink(d.waDefault)} target="_blank" rel="noopener" class="btn btn-ghost bg-white/10"><Icon name="whatsapp" class="h-4 w-4" /> <span dir="ltr">{contact.mobile}</span></a>
     </div>
   </div>
 </section>

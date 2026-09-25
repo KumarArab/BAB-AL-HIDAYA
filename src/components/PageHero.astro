@@ -1,19 +1,22 @@
 ---
-interface Props { eyebrow?: string; title: string; subtitle?: string; crumbs?: { label: string; href?: string }[] }
-const { eyebrow, title, subtitle, crumbs = [] } = Astro.props;
+import { t, link, asset, type Lang } from '../i18n/utils';
+interface Props { lang: Lang; eyebrow?: string; title: string; subtitle?: string; image?: string; crumbs?: { label: string; route?: string }[] }
+const { lang, eyebrow, title, subtitle, image, crumbs = [] } = Astro.props;
 ---
 <section class="relative overflow-hidden bg-navy-900 text-white">
-  <div class="pattern-grid absolute inset-0" aria-hidden="true"></div>
-  <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-teal-500/20 blur-3xl" aria-hidden="true"></div>
-  <div class="container-x relative py-16 sm:py-20">
+  {image && <img src={asset(image)} alt="" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />}
+  <div class="absolute inset-0 bg-gradient-to-r from-navy-950/95 via-navy-900/85 to-navy-900/50 rtl:bg-gradient-to-l" aria-hidden="true"></div>
+  <div class="pattern-grid absolute inset-0 opacity-60" aria-hidden="true"></div>
+  <div class="container-x relative py-20 sm:py-28">
     {crumbs.length > 0 && (
-      <nav class="mb-4 text-xs text-white/60" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-white">Home</a>
-        {crumbs.map((c) => (<><span class="mx-2">/</span>{c.href ? <a href={c.href} class="hover:text-white">{c.label}</a> : <span class="text-white/90">{c.label}</span>}</>))}
+      <nav class="mb-5 text-xs text-white/60" aria-label="Breadcrumb">
+        <a href={link(lang)} class="hover:text-white">{t(lang).common.home}</a>
+        {crumbs.map((c) => (<><span class="mx-2">/</span>{c.route ? <a href={link(lang, c.route)} class="hover:text-white">{c.label}</a> : <span class="text-white/90">{c.label}</span>}</>))}
       </nav>
     )}
-    {eyebrow && <p class="text-xs font-semibold uppercase tracking-[0.18em] text-gold-400">{eyebrow}</p>}
-    <h1 class="mt-2 max-w-3xl text-3xl font-extrabold text-white sm:text-5xl">{title}</h1>
-    {subtitle && <p class="mt-4 max-w-2xl text-lg text-white/75">{subtitle}</p>}
+    {eyebrow && <p class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold-400"><span class="h-px w-8 bg-gold-400"></span>{eyebrow}</p>}
+    <h1 class="mt-3 max-w-3xl text-3xl font-extrabold text-white sm:text-5xl">{title}</h1>
+    {subtitle && <p class="mt-5 max-w-2xl text-lg text-white/80">{subtitle}</p>}
   </div>
+  <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-gold-500 via-teal-500 to-gold-500" aria-hidden="true"></div>
 </section>

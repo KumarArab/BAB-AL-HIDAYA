@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { contact, whatsappLink } from '../data/site';
+import { getServices } from '../data/services';
+import { t, type Lang } from '../i18n/utils';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const d = t(lang);
+const p = d.contactPage;
+const f = p.fields;
+const services = getServices(lang);
+const a = d.address;
+---
+<Base lang={lang} title={p.title} description={p.description}>
+  <PageHero lang={lang} eyebrow={p.eyebrow} title={p.heading} subtitle={p.subtitle} image="/images/office.jpg" crumbs={[{ label: d.nav.contact }]} />
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
+      <div class="space-y-6 lg:col-span-4">
+        <div class="card">
+          <h2 class="text-lg font-bold">{p.office}</h2>
+          <ul class="mt-4 space-y-4 text-sm">
+            <li class="flex gap-3"><Icon name="pin" class="h-5 w-5 shrink-0 text-teal-600" /><span>{a.line1}<br />{a.line2}<br />{a.poBox}{d.common.comma}{a.city}<br />{a.country}</span></li>
+            <li class="flex gap-3"><Icon name="phone" class="h-5 w-5 shrink-0 text-teal-600" /><a href={contact.phoneHref} class="hover:text-teal-600" dir="ltr">{contact.phone}</a></li>
+            <li class="flex gap-3"><Icon name="whatsapp" class="h-5 w-5 shrink-0 text-teal-600" /><a href={whatsappLink(d.common.waDefault)} target="_blank" rel="noopener" class="hover:text-teal-600" dir="ltr">{contact.mobile}</a></li>
+            <li class="flex gap-3"><Icon name="mail" class="h-5 w-5 shrink-0 text-teal-600" /><a href={`mailto:${contact.email}`} class="hover:text-teal-600">{contact.email}</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2 class="text-lg font-bold">{p.hoursTitle}</h2>
+          <ul class="mt-4 space-y-2 text-sm">
+            {d.hours.map((h) => <li class="flex justify-between gap-4"><span class="text-muted">{h.days}</span><span class="text-end font-medium">{h.time}</span></li>)}
+          </ul>
+          <p class="mt-4 rounded-md bg-gold-50 p-3 text-xs font-medium text-navy-900">{d.common.emergency}</p>
+        </div>
+        <a href={whatsappLink(d.common.waDefault)} target="_blank" rel="noopener" class="flex items-center gap-4 rounded-xl bg-[#25D366] p-5 text-white shadow-lg transition hover:brightness-105">
+          <Icon name="whatsapp" class="h-8 w-8 shrink-0" />
+          <span><span class="block font-bold">{d.common.chatWhatsapp}</span><span class="text-sm text-white/90" dir="ltr">{contact.mobile}</span></span>
+        </a>
+      </div>
+
+      <div id="quote" class="scroll-mt-28 lg:col-span-8">
+        <div class="rounded-2xl border border-line bg-mist p-6 shadow-sm sm:p-10">
+          <h2 class="text-2xl font-bold">{p.formTitle}</h2>
+          <p class="mt-2 text-sm text-muted">{p.formLead}</p>
+          <form id="quote-form" class="mt-8 grid gap-5 sm:grid-cols-2">
+            <label class="label">{f.name} *<input name="name" required class="field" autocomplete="name" /></label>
+            <label class="label">{f.company}<input name="company" class="field" autocomplete="organization" /></label>
+            <label class="label">{f.phone} *<input name="phone" required type="tel" class="field" placeholder="+971" autocomplete="tel" dir="ltr" /></label>
+            <label class="label">{f.email}<input name="email" type="email" class="field" autocomplete="email" dir="ltr" /></label>
+            <label class="label">{f.service} *
+              <select name="service" required class="field">
+                <option value="">{p.selectService}</option>
+                {services.map((s) => <option>{s.title}</option>)}
+                <option>{p.multiple}</option>
+              </select>
+            </label>
+            <label class="label">{f.property}
+              <select name="property" class="field">
+                <option value="">{p.select}</option>
+                {p.propertyTypes.map((pt) => <option>{pt}</option>)}
+              </select>
+            </label>
+            <label class="label sm:col-span-2">{f.location}<input name="location" class="field" placeholder={p.locationPh} /></label>
+            <label class="label sm:col-span-2">{f.message}<textarea name="message" rows="4" class="field" placeholder={p.messagePh}></textarea></label>
+            <div class="flex flex-wrap gap-3 sm:col-span-2">
+              <button type="submit" data-channel="whatsapp" class="btn btn-dark"><Icon name="whatsapp" class="h-4 w-4" /> {p.sendWa}</button>
+              <button type="submit" data-channel="email" class="btn btn-outline"><Icon name="mail" class="h-4 w-4" /> {p.sendEmail}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="no-print">
+    <iframe title={p.mapTitle} src={contact.mapEmbed} class="h-80 w-full border-0 grayscale" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
+</Base>
+
+<script define:vars={{ wa: contact.whatsapp, email: contact.email, labels: f, header: p.msgHeader }}>
+  const form = document.getElementById('quote-form');
+  let channel = 'whatsapp';
+  form.querySelectorAll('button[data-channel]').forEach((b) =>
+    b.addEventListener('click', () => (channel = b.dataset.channel)));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const lines = Object.entries(labels).map(([k, l]) => (d.get(k) ? `${l}: ${d.get(k)}` : null)).filter(Boolean);
+    const body = `${header}\n\n${lines.join('\n')}`;
+    if (channel === 'email') {
+      location.href = `mailto:${email}?subject=${encodeURIComponent(header + ': ' + d.get('service'))}&body=${encodeURIComponent(body)}`;
+    } else {
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(body)}`, '_blank', 'noopener');
+    }
+  });
+</script>
