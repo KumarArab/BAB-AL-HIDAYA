@@ -13,7 +13,6 @@ const serviceMeta: { slug: string; icon: IconName; image: string }[] = [
   { slug: 'hvac-ac-maintenance', icon: 'snow', image: '/images/hvac.jpg' },
   { slug: 'cleaning-services', icon: 'sparkle', image: '/images/cleaning-service.jpg' },
   { slug: 'facade-window-cleaning', icon: 'building', image: '/images/facade-rope-access.jpg' },
-  { slug: 'water-tank-disinfection', icon: 'droplet', image: '/images/plumbing.jpg' },
 ];
 
 export const serviceSlugs = serviceMeta.map((s) => s.slug);

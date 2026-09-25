@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { contact, registration, whatsappLink } from '../data/site';
+import { contact, registration, show, whatsappLink } from '../data/site';
 import { getServices } from '../data/services';
 import { t, link, type Lang } from '../i18n/utils';
 
@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
 const c = d.common.comma;
 const companyLinks = [
   ['/about', d.nav.aboutUs], ['/leadership', d.nav.leadership], ['/licences', d.nav.licences], ['/hse', d.nav.hse],
-  ['/projects', d.nav.projects], ['/careers', d.nav.careers], ['/company-profile', d.nav.profile],
+  ...(show.projects ? [['/projects', d.nav.projects]] : []), ['/careers', d.nav.careers], ['/company-profile', d.nav.profile],
 ];
 ---
 <footer class="bg-navy-950 text-white/70">
@@ -40,7 +40,7 @@ const companyLinks = [
     <div>
       <h3 class="text-sm font-semibold uppercase tracking-wider text-white">{d.common.footerContact}</h3>
       <ul class="mt-4 space-y-3 text-sm">
-        <li class="flex gap-2"><Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" /><span>{d.address.line1}{c}{d.address.line2}<br />{d.address.poBox}{c}{d.address.city}{c}{d.address.short}</span></li>
+        <li class="flex gap-2"><Icon name="pin" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" /><span>{d.address.line1}{c}{d.address.line2}<br />{[d.address.poBox, d.address.city, d.address.short].filter(Boolean).join(c)}</span></li>
         <li class="flex gap-2"><Icon name="phone" class="h-4 w-4 shrink-0 text-gold-400" /><a href={contact.phoneHref} class="hover:text-white" dir="ltr">{contact.phone}</a></li>
         <li class="flex gap-2"><Icon name="whatsapp" class="h-4 w-4 shrink-0 text-gold-400" /><a href={whatsappLink(d.common.waDefault)} target="_blank" rel="noopener" class="hover:text-white" dir="ltr">{contact.mobile}</a></li>
         <li class="flex gap-2"><Icon name="mail" class="h-4 w-4 shrink-0 text-gold-400" /><a href={`mailto:${contact.email}`} class="hover:text-white">{contact.email}</a></li>
@@ -51,7 +51,7 @@ const companyLinks = [
   <div class="border-t border-white/10">
     <div class="container-x flex flex-col gap-2 py-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
       <p>© {year} {d.company.legalName}. {d.common.rights}</p>
-      <p>{d.common.licenceShort(registration.tradeLicenceNo)} · {d.common.trn} {registration.vatTrn}</p>
+      <p>{d.common.licenceShort(registration.tradeLicenceNo)} · {d.common.crShort(registration.commercialRegisterNo)}{registration.vatTrn && ` · ${d.common.trn} ${registration.vatTrn}`}</p>
     </div>
   </div>
 </footer>

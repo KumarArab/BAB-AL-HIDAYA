@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { certificationCodes, hseKpiValues } from '../data/site';
+import { certificationCodes, hseKpiValues, show } from '../data/site';
 import { t, asset, type Lang } from '../i18n/utils';
 
 interface Props { lang: Lang }
@@ -16,6 +16,7 @@ const icons = ['hardhat', 'star', 'leaf', 'users'] as const;
 <Base lang={lang} title={p.title} description={p.description}>
   <PageHero lang={lang} eyebrow={p.eyebrow} title={p.heading} subtitle={p.subtitle} image="/images/technician-ppe.jpg" crumbs={[{ label: d.nav.about, route: '/about' }, { label: p.title }]} />
 
+{show.hseKpis && (
   <section class="border-b border-line">
     <div class="container-x grid grid-cols-2 py-10 md:grid-cols-4">
       {hseKpiValues.map((v, i) => (
@@ -24,6 +25,7 @@ const icons = ['hardhat', 'star', 'leaf', 'users'] as const;
     </div>
   </section>
 
+)}
   <section class="section">
     <div class="container-x">
       <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
@@ -44,6 +46,7 @@ const icons = ['hardhat', 'star', 'leaf', 'users'] as const;
     </div>
   </section>
 
+{show.certifications && (
   <section class="section bg-mist">
     <div class="container-x grid gap-6 md:grid-cols-3">
       {certificationCodes.map((code, i) => (
@@ -51,5 +54,6 @@ const icons = ['hardhat', 'star', 'leaf', 'users'] as const;
       ))}
     </div>
   </section>
+)}
   <CtaBand lang={lang} />
 </Base>

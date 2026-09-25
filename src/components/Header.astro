@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { contact, whatsappLink } from '../data/site';
+import { contact, show, whatsappLink } from '../data/site';
 import { t, link, routeOf, type Lang } from '../i18n/utils';
 
 interface Props { lang: Lang }
@@ -26,7 +26,7 @@ const nav = [
   },
   { label: d.nav.services, route: '/services' },
   { label: d.nav.sectors, route: '/sectors' },
-  { label: d.nav.projects, route: '/projects' },
+  ...(show.projects ? [{ label: d.nav.projects, route: '/projects' }] : []),
   { label: d.nav.careers, route: '/careers' },
   { label: d.nav.contact, route: '/contact' },
 ];

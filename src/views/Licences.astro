@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import Icon from '../components/Icon.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { contact, registration, approvalRefs, certificationCodes } from '../data/site';
+import { contact, registration, approvalRefs, certificationCodes, show } from '../data/site';
 import { t, link, type Lang } from '../i18n/utils';
 
 interface Props { lang: Lang }
@@ -19,14 +19,16 @@ const rows: [string, string, boolean?][] = [
   [p.rows.nameAlt, d.company.legalNameAlt, true],
   [p.rows.form, r.legalForm],
   [p.rows.licence, registration.tradeLicenceNo],
+  [p.rows.register, registration.commercialRegisterNo],
   [p.rows.type, r.licenceType],
   [p.rows.authority, r.issuingAuthority],
   [p.rows.issued, r.licenceIssued],
   [p.rows.expiry, r.licenceExpiry],
-  [p.rows.trn, registration.vatTrn],
+  ...(registration.vatTrn ? [[p.rows.trn, registration.vatTrn] as [string, string]] : []),
   [p.rows.chamber, r.chamber(registration.chamberNo)],
-  [p.rows.office, `${d.address.line1}${c}${d.address.line2}${c}${d.address.city}${c}${d.address.short}`],
+  [p.rows.office, [d.address.line1, d.address.line2, d.address.city, d.address.short].filter(Boolean).join(c)],
   [p.rows.tenancy, r.ejari],
+  [p.rows.owner, d.leadership[0].name],
 ];
 ---
 <Base lang={lang} title={p.title} description={p.description}>
@@ -59,6 +61,7 @@ const rows: [string, string, boolean?][] = [
     </div>
   </section>
 
+{show.approvals && (
   <section class="section bg-mist">
     <div class="container-x">
       <SectionHead eyebrow={p.approvalsEyebrow} title={p.approvalsTitle} />
@@ -75,6 +78,8 @@ const rows: [string, string, boolean?][] = [
     </div>
   </section>
 
+)}
+{(show.certifications || show.insurance) && (
   <section class="section">
     <div class="container-x grid gap-12 lg:grid-cols-2">
       <div>
@@ -103,6 +108,7 @@ const rows: [string, string, boolean?][] = [
     </div>
   </section>
 
+)}
   <section class="section bg-mist">
     <div class="container-x">
       <SectionHead eyebrow={p.ddEyebrow} title={p.ddTitle} lead={p.ddLead} />

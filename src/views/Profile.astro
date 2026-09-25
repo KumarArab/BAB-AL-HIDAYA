@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Logo from '../components/Logo.astro';
-import { company, contact, registration, approvalRefs, certificationCodes, statValues, isSampleData } from '../data/site';
+import { company, contact, registration, approvalRefs, certificationCodes, statValues, isSampleData, show } from '../data/site';
 import { getServices } from '../data/services';
 import { t, dir, link, asset, type Lang } from '../i18n/utils';
 
@@ -69,9 +69,11 @@ const services = getServices(lang);
               <tr><td class="py-2 text-muted">{d.licencesPage.rows.licence}</td><td class="py-2 font-medium">{registration.tradeLicenceNo} ({r.licenceType})</td></tr>
               <tr><td class="py-2 text-muted">{d.licencesPage.rows.authority}</td><td class="py-2 font-medium">{r.issuingAuthority}</td></tr>
               <tr><td class="py-2 text-muted">{p.validity}</td><td class="py-2 font-medium">{r.licenceIssued} {p.to} {r.licenceExpiry}</td></tr>
-              <tr><td class="py-2 text-muted">{d.licencesPage.rows.trn}</td><td class="py-2 font-medium">{registration.vatTrn}</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.register}</td><td class="py-2 font-medium">{registration.commercialRegisterNo}</td></tr>
+              {registration.vatTrn && <tr><td class="py-2 text-muted">{d.licencesPage.rows.trn}</td><td class="py-2 font-medium">{registration.vatTrn}</td></tr>}
               <tr><td class="py-2 text-muted">{d.licencesPage.rows.chamber}</td><td class="py-2 font-medium">{r.chamber(registration.chamberNo)}</td></tr>
-              <tr><td class="py-2 text-muted">{d.licencesPage.rows.office}</td><td class="py-2 font-medium">{a.line1}{c}{a.line2}{c}{a.poBox}{c}{a.city}{c}{a.short}</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.office}</td><td class="py-2 font-medium">{[a.line1, a.line2, a.poBox, a.city, a.short].filter(Boolean).join(c)}</td></tr>
+              <tr><td class="py-2 text-muted">{d.licencesPage.rows.owner}</td><td class="py-2 font-medium">{d.leadership[0].name}</td></tr>
             </tbody>
           </table>
           <p class="mt-3 text-xs text-muted"><strong class="text-navy-900">{p.activitiesLabel}</strong> {r.activities.join(' · ')}</p>
@@ -105,6 +107,7 @@ const services = getServices(lang);
           </div>
         </section>
 
+{(show.approvals || show.certifications || show.insurance) && (
         <section class="mt-8 grid grid-cols-2 gap-8">
           <div>
             <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s4}</h2>
@@ -121,15 +124,18 @@ const services = getServices(lang);
           </div>
         </section>
 
+)}
         <section class="mt-8">
           <h2 class="border-s-4 border-teal-600 ps-3 text-lg font-bold">{p.s6}</h2>
           <p class="mt-3 text-xs text-muted">{d.sectors.map((s) => s.title).join(' · ')}</p>
+{show.projects && (
           <table class="mt-3 w-full text-xs">
             <thead><tr class="bg-navy-900 text-start text-white"><th class="p-2 text-start">{p.thProperty}</th><th class="p-2 text-start">{p.thLocation}</th><th class="p-2 text-start">{p.thScope}</th><th class="p-2 text-start">{p.thPeriod}</th></tr></thead>
             <tbody class="divide-y divide-line">
               {d.projects.map((pr) => <tr><td class="p-2 font-medium">{pr.title}</td><td class="p-2">{pr.location}</td><td class="p-2 text-muted">{pr.scope}</td><td class="p-2">{pr.duration}</td></tr>)}
             </tbody>
           </table>
+)}
         </section>
 
         <section class="mt-8">
@@ -142,7 +148,7 @@ const services = getServices(lang);
         <footer class="mt-10 flex flex-wrap justify-between gap-4 border-t-4 border-gold-500 pt-4 text-xs text-muted">
           <span dir="ltr">{contact.phone} · {contact.email}</span>
           <span>{company.domain}</span>
-          <span>{d.common.licenceShort(registration.tradeLicenceNo)} · {d.common.trn} {registration.vatTrn}</span>
+          <span>{d.common.licenceShort(registration.tradeLicenceNo)} · {d.common.crShort(registration.commercialRegisterNo)}</span>
         </footer>
       </div>
     </article>

@@ -15,7 +15,7 @@ const initials = (name: string) => name.split(' ').filter((_, i, a) => i === 0 |
   <PageHero lang={lang} eyebrow={p.eyebrow} title={p.heading} subtitle={p.subtitle} image="/images/office.jpg" crumbs={[{ label: d.nav.about, route: '/about' }, { label: p.title }]} />
 
   <section class="section">
-    <div class="container-x grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div class:list={['container-x grid gap-6', d.leadership.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'max-w-md']}>
       {d.leadership.map((m) => (
         <article class="card overflow-hidden p-0">
           <div class="flex h-40 items-center justify-center bg-gradient-to-br from-navy-900 to-navy-700">
@@ -31,6 +31,7 @@ const initials = (name: string) => name.split(' ').filter((_, i, a) => i === 0 |
     </div>
   </section>
 
+{d.leadership.length > 1 && (
   <section class="section bg-mist">
     <div class="container-x">
       <SectionHead eyebrow={p.orgEyebrow} title={p.orgTitle} lead={p.orgLead} />
@@ -49,5 +50,6 @@ const initials = (name: string) => name.split(' ').filter((_, i, a) => i === 0 |
       </div>
     </div>
   </section>
+)}
   <CtaBand lang={lang} />
 </Base>

@@ -38,20 +38,21 @@ Each route in `src/pages/` and `src/pages/ar/` is a thin wrapper around a view i
 `/` Home · `/about` · `/leadership` · `/licences` (Licences & Compliance) · `/hse` · `/services` + 6 detail pages ·
 `/sectors` · `/projects` · `/careers` · `/contact` · `/company-profile` (printable A4, "Save as PDF" for banks)
 
-## Go-live checklist (replace sample data)
+## Go-live checklist
 
-- [ ] Trade licence no., issue/expiry dates, exact licensed activities (from the DET licence)
-- [ ] VAT TRN, Chamber of Commerce no., Ejari/office address, P.O. Box
-- [ ] Phone, WhatsApp number, email addresses (on the company domain)
-- [ ] Dubai Municipality / Civil Defence approvals: **remove any the company does not actually hold**
-- [ ] ISO certificates: **remove if not certified**
-- [ ] Insurance policies and cover amounts
-- [ ] Founding year, staff count, AMC count, HSE KPIs (`hseKpiValues` in `src/data/site.ts`)
-- [ ] Leadership names, roles, bios (add photos if available)
-- [ ] Projects and testimonials: only real, client-approved ones
-- [ ] Milestones on `/about` and job openings on `/careers`
-- [ ] Real logo, plus team, van and site photos (replace stock photos in `public/images/`)
-- [ ] Google Maps embed URL for the real office
+Verified from the Ajman DED licence pack (Sept 2026): legal name (EN/AR), legal form, licence no. 140351,
+commercial register no. 201843804, Ajman Chamber no. 223220, licence dates, licensed activities,
+office (Office No. 109, Masfout 8, Ajman), owner/manager, founding year 2026.
+
+Still needed from the client (see `docs/BAB-AL-HIDAYA-Website-Information-Form.docx`):
+
+- [ ] Phone, WhatsApp, emails, Google Maps pin (placeholders in `src/data/site.ts`)
+- [ ] VAT TRN, if registered (row appears automatically when `registration.vatTrn` is set)
+- [ ] Owner bio and photo; any other managers
+- [ ] Confirm services outside the three licensed activities (AC, staffing on hourly/monthly basis)
+- [ ] Logo and real photos (replace stock photos in `public/images/`)
+- [ ] Evidence-gated sections, switched on in `show` in `src/data/site.ts` only with documents or real content:
+      approvals, ISO certificates, insurance, projects, testimonials, HSE figures
 - [ ] Set `isSampleData = false`
 
 ## Hosting (Netlify)
