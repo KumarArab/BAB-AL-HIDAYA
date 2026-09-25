@@ -54,16 +54,17 @@ Each route in `src/pages/` and `src/pages/ar/` is a thin wrapper around a view i
 - [ ] Google Maps embed URL for the real office
 - [ ] Set `isSampleData = false`
 
-## Preview deployment (GitHub Pages)
+## Hosting (Netlify)
 
-`.github/workflows/deploy-pages.yml` builds on every push to `develop` or the working branch and publishes
-`dist/` to the `gh-pages` branch. Live at **https://arabkumar.in/BAB-AL-HIDAYA/** (the account’s Pages custom domain; kumararab.github.io/BAB-AL-HIDAYA redirects there).
-One-time setup: *Settings → Pages → Build and deployment → Deploy from a branch → `gh-pages` / root*.
+`netlify.toml` holds the build settings. Connect the repo in Netlify and it builds automatically:
+English at `/`, Arabic at `/ar/`, both from one site. Every push to the production branch redeploys.
+Set `SITE_URL` (e.g. `https://babalhidaya.netlify.app`, later `https://babalhidaya.ae`) under
+*Site configuration → Environment variables* so canonical and hreflang links use the right domain.
 
-## Production deploy
+## Custom domain
 
-Any static host works (Vercel, Netlify, Cloudflare Pages): build command `npm run build`, output `dist/`.
-Point `babalhidaya.ae` (and `.com` as a redirect) at the host.
+In Netlify: *Domain management → Add a domain* → `babalhidaya.ae`, then add `babalhidaya.com` as a domain alias
+(Netlify redirects it to the primary). HTTPS certificates are issued automatically.
 
 ## Roadmap
 
