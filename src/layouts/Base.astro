@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Icon from '../components/Icon.astro';
-import { company, contact, isSampleData, whatsappLink } from '../data/site';
+import { company, contact, isSampleData, allowIndexing, whatsappLink } from '../data/site';
 import { t, dir, link, asset, routeOf, type Lang } from '../i18n/utils';
 
 interface Props { lang: Lang; title?: string; description?: string }
@@ -18,7 +18,6 @@ const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
   name: t('en').company.legalName,
-  alternateName: t('ar').company.legalName,
   url: abs('en'),
   telephone: contact.phone,
   email: contact.email,
@@ -49,7 +48,7 @@ const orgSchema = {
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang === 'ar' ? 'ar_AE' : 'en_AE'} />
     <meta name="theme-color" content="#0b2545" />
-    {isSampleData && <meta name="robots" content="noindex, nofollow" />}
+    {(isSampleData || !allowIndexing) && <meta name="robots" content="noindex, nofollow" />}
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   </head>
   <body class="flex min-h-screen flex-col">

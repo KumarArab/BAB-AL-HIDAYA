@@ -1,60 +1,47 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────
- *  LANGUAGE-NEUTRAL COMPANY DETAILS (numbers, contacts, references)
+ *  LANGUAGE-NEUTRAL COMPANY DETAILS (numbers, contacts)
  * ─────────────────────────────────────────────────────────────────────────
- *  VERIFIED from the Ajman DED licence pack (printed 2026-09-02):
- *    licence no., commercial register no., chamber no., licence dates,
- *    founding year, legal name/form, activities, office address, owner.
- *
- *  STILL SAMPLE (awaiting the client form in docs/):
- *    phone, WhatsApp, emails, map pin, VAT TRN, careers openings.
- *  Keep `isSampleData` true until those are confirmed.
+ *  Contacts and map confirmed by the client (Sept 2026).
+ *  Legal/registration details (licence, register, owner, VAT) are kept off
+ *  the website on the client's instruction; do not add them here.
  * ─────────────────────────────────────────────────────────────────────────
  */
 
-export const isSampleData = true;
+/** Shows the "preview" banner. Off: contact details are confirmed. */
+export const isSampleData = false;
+
+/** Search-engine indexing. Switch on once the site runs on its own domain. */
+export const allowIndexing = false;
 
 export const company = {
   founded: 2026,
-  domain: 'babalhidaya.ae',
+  domain: 'babalhidaya.com',
 };
 
 export const contact = {
-  phone: '+971 6 123 4567', // SAMPLE
-  phoneHref: 'tel:+97161234567', // SAMPLE
-  mobile: '+971 50 123 4567', // SAMPLE
-  whatsapp: '971501234567', // SAMPLE, digits only, used for wa.me links
-  email: 'info@babalhidaya.ae', // SAMPLE until the domain mailbox exists
-  careersEmail: 'careers@babalhidaya.ae', // SAMPLE
-  mapEmbed: 'https://www.google.com/maps?q=Masfout,+Ajman,+United+Arab+Emirates&output=embed',
+  phone: '+971 6 521 7126',
+  phoneHref: 'tel:+97165217126',
+  mobile: '+971 54 214 3054',
+  whatsapp: '971542143054', // digits only, used for wa.me links
+  email: 'info@babalhidaya.com', // mailbox to be created once the domain is bought
+  mapLink: 'https://maps.app.goo.gl/px5u4ESidL8FQdmz7',
+  mapEmbed: 'https://www.google.com/maps?q=24.8306092,56.0645647&z=16&output=embed',
 };
 
-export const registration = {
-  tradeLicenceNo: '140351',
-  commercialRegisterNo: '201843804',
-  chamberNo: '223220',
-  vatTrn: '', // not in the licence pack; shown only when provided
-};
-
-/**
- * Sections that need evidence before they can be shown. Each stays hidden
- * until the client supplies the supporting document or real content.
- */
+/** Sections that stay hidden until real content exists. */
 export const show = {
-  approvals: false, // municipality / MOHRE / Civil Defence approvals
-  certifications: false, // ISO certificates
-  insurance: false, // insurance policies
-  projects: false, // completed projects (company registered Aug 2026)
+  projects: false, // completed projects
   testimonials: false, // genuine client reviews
   hseKpis: false, // measured safety / satisfaction figures
 };
 
-export const approvalRefs = ['', '', ''];
-
-export const certificationCodes = ['ISO 9001:2015', 'ISO 14001:2015', 'ISO 45001:2018'];
-
-/** Headline figures: only facts that are true today. */
-export const statValues = [String(company.founded), '7', '4', '3'];
+/**
+ * Headline figures. ESTIMATES agreed with the agency: confirm with the
+ * client before presenting the site to banks or investors.
+ * [team experience (owner: 10 yrs), emirates covered, trained staff, hiring options]
+ */
+export const statValues = ['10+', '7', '40+', '4'];
 
 export const hseKpiValues = ['0', '1.2M', '100%', '96%'];
 

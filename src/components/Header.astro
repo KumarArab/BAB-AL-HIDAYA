@@ -19,15 +19,12 @@ const nav = [
     route: '/about',
     children: [
       { label: d.nav.overview, route: '/about' },
-      { label: d.nav.leadership, route: '/leadership' },
-      { label: d.nav.licences, route: '/licences' },
       { label: d.nav.hse, route: '/hse' },
     ],
   },
   { label: d.nav.services, route: '/services' },
   { label: d.nav.sectors, route: '/sectors' },
   ...(show.projects ? [{ label: d.nav.projects, route: '/projects' }] : []),
-  { label: d.nav.careers, route: '/careers' },
   { label: d.nav.contact, route: '/contact' },
 ];
 const switchHref = link(other, route);

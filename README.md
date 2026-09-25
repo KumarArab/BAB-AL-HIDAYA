@@ -25,7 +25,7 @@ npm run build     # static output in dist/
 | Service slugs, icons and photos | `src/data/services.ts` |
 | Photos (Pexels, free commercial licence; see `CREDITS.md`) | `public/images/` |
 | Page layouts (shared by both languages) | `src/views/` |
-| Logo (placeholder mark) | `src/components/Logo.astro`, `public/favicon.svg` |
+| Logo files | `public/brand/`, used by `src/components/Logo.astro`; favicon `public/favicon.svg` |
 | Colours and fonts | `src/styles/global.css` (`@theme`) |
 
 ## Languages
@@ -35,25 +35,28 @@ Each route in `src/pages/` and `src/pages/ar/` is a thin wrapper around a view i
 
 ## Pages
 
-`/` Home · `/about` · `/leadership` · `/licences` (Licences & Compliance) · `/hse` · `/services` + 6 detail pages ·
-`/sectors` · `/projects` · `/careers` · `/contact` · `/company-profile` (printable A4, "Save as PDF" for banks)
+`/` Home · `/about` · `/hse` · `/services` + 6 detail pages · `/sectors` · `/contact` ·
+`/company-profile` (printable A4 brochure, "Save as PDF") · `/projects` (hidden until real projects exist)
 
 ## Go-live checklist
 
-Verified from the Ajman DED licence pack (Sept 2026): legal name (EN/AR), legal form, licence no. 140351,
-commercial register no. 201843804, Ajman Chamber no. 223220, licence dates, licensed activities,
-office (Office No. 109, Masfout 8, Ajman), owner/manager, founding year 2026.
+Confirmed by the client (Sept 2026): contacts (WhatsApp +971 54 214 3054, landline +971 6 521 7126,
+info@babalhidaya.com), office map pin, hours (Mon–Sat 8 AM – 8 PM), services, quote-only pricing, payment methods.
 
-Still needed from the client (see `docs/BAB-AL-HIDAYA-Website-Information-Form.docx`):
+**Privacy rule:** licence/registration numbers, owner details, VAT and other legal information are
+deliberately **not** shown on the website.
 
-- [ ] Phone, WhatsApp, emails, Google Maps pin (placeholders in `src/data/site.ts`)
-- [ ] VAT TRN, if registered (row appears automatically when `registration.vatTrn` is set)
-- [ ] Owner bio and photo; any other managers
-- [ ] Confirm services outside the three licensed activities (AC, staffing on hourly/monthly basis)
-- [ ] Logo and real photos (replace stock photos in `public/images/`)
-- [ ] Evidence-gated sections, switched on in `show` in `src/data/site.ts` only with documents or real content:
-      approvals, ISO certificates, insurance, projects, testimonials, HSE figures
-- [ ] Set `isSampleData = false`
+- [ ] Buy `babalhidaya.com` (and ideally `.ae`), create the `info@` mailbox, connect the domain in Netlify
+- [ ] Then set `allowIndexing = true` in `src/data/site.ts` and `SITE_URL` in Netlify
+- [ ] Headline figures in `statValues` (`src/data/site.ts`) are estimates: confirm with the client
+- [ ] Real photos to replace stock photos in `public/images/`
+- [ ] Optional sections in `show` (projects, testimonials, HSE figures) only with real content
+
+## Brand
+
+Logo files (vector, text outlined) in `public/brand/`: horizontal, horizontal-white, stacked, stacked-white,
+mark, plus PNG exports. Concept: an arched doorway (*bab*) framing a guiding star (*hidaya*) that doubles as a
+cleaning sparkle. Colours: navy `#0B2545`, gold `#C9A227`, teal `#14968C`.
 
 ## Hosting (Netlify)
 

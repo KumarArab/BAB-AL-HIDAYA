@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { company, statValues, registration, certificationCodes, show, whatsappLink } from '../data/site';
+import { company, contact, statValues, show, whatsappLink } from '../data/site';
 import { getServices } from '../data/services';
 import { t, link, asset, type Lang } from '../i18n/utils';
 
@@ -42,17 +42,16 @@ const reasonIcons = ['shield', 'clock', 'users', 'doc'] as const;
       <div class="lg:col-span-5">
         <div class="rounded-2xl border border-white/15 bg-navy-950/60 p-6 shadow-2xl backdrop-blur-md sm:p-8">
           <div class="flex items-center justify-between">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-gold-400">{h.credTitle}</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-gold-400">{h.quickTitle}</p>
             <Icon name="shield" class="h-6 w-6 text-teal-500" />
           </div>
-          <dl class="mt-6 divide-y divide-white/10 text-sm">
-            <div class="flex justify-between gap-4 py-3"><dt class="text-white/60">{h.credLegal}</dt><dd class="text-end font-medium">{d.registration.legalFormShort}</dd></div>
-            <div class="flex justify-between gap-4 py-3"><dt class="text-white/60">{h.credLicence}</dt><dd class="text-end font-medium">{h.licenceNo(registration.tradeLicenceNo)}</dd></div>
-            <div class="flex justify-between gap-4 py-3"><dt class="text-white/60">{h.credIssued}</dt><dd class="text-end font-medium">{d.registration.issuingShort}</dd></div>
-            <div class="flex justify-between gap-4 py-3"><dt class="text-white/60">{h.credRegister}</dt><dd class="text-end font-medium">{registration.commercialRegisterNo}</dd></div>
-            <div class="flex justify-between gap-4 py-3"><dt class="text-white/60">{h.credChamber}</dt><dd class="text-end font-medium">{registration.chamberNo}</dd></div>
-          </dl>
-          <a href={link(lang, '/licences')} class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gold-400 hover:text-gold-50">{h.credLink} <Icon name="arrow" class="h-4 w-4" /></a>
+          <ul class="mt-6 space-y-4 text-sm">
+            {h.quickPoints.map((pt) => <li class="flex gap-3"><Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-teal-500" /><span class="text-white/90">{pt}</span></li>)}
+          </ul>
+          <div class="mt-7 grid gap-3 sm:grid-cols-2">
+            <a href={whatsappLink(d.common.waDefault)} target="_blank" rel="noopener" class="btn bg-[#25D366] text-white hover:brightness-105"><Icon name="whatsapp" class="h-4 w-4" /> {d.common.whatsapp}</a>
+            <a href={contact.phoneHref} class="btn btn-ghost"><Icon name="phone" class="h-4 w-4" /> <span dir="ltr">{contact.phone}</span></a>
+          </div>
         </div>
       </div>
     </div>
@@ -201,49 +200,6 @@ const reasonIcons = ['shield', 'clock', 'users', 'doc'] as const;
       <div class="mt-8 flex flex-wrap justify-center gap-3">
         {h.emirates.map((e) => <span class="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-5 py-2 text-sm font-semibold backdrop-blur"><Icon name="pin" class="h-4 w-4 text-gold-400" />{e}</span>)}
       </div>
-    </div>
-  </section>
-
-  <!-- COMPLIANCE STRIP -->
-  <section class="section bg-mist">
-    <div class="container-x">
-      <SectionHead eyebrow={h.complianceEyebrow} title={h.complianceTitle} lead={h.complianceLead} center />
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        {[
-          [h.credLicence, registration.tradeLicenceNo, d.registration.issuingShort],
-          [h.credRegister, registration.commercialRegisterNo, d.registration.legalForm],
-          [h.credChamber, registration.chamberNo, d.registration.licenceType],
-        ].map(([label, value, sub]) => (
-          <div class="card flex items-center gap-4">
-            <span class="icon-tile shrink-0"><Icon name="shield" /></span>
-            <div><p class="text-sm text-muted">{label}</p><p class="font-display text-xl font-extrabold text-navy-900" dir="ltr">{value}</p><p class="text-xs text-muted">{sub}</p></div>
-          </div>
-        ))}
-      </div>
-      <div class="mt-6 flex flex-wrap justify-center gap-3">
-        {d.registration.activities.map((act) => <span class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-medium text-navy-900"><Icon name="check" class="h-4 w-4 text-teal-600" />{act}</span>)}
-      </div>
-      {show.certifications && (
-        <div class="mt-6 grid gap-6 md:grid-cols-3">
-          {certificationCodes.map((code, i) => (
-            <div class="card flex items-center gap-4">
-              <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-gold-500 font-display text-xs font-extrabold text-navy-900">ISO</div>
-              <div><p class="font-display text-lg font-extrabold text-navy-900" dir="ltr">{code}</p><p class="text-sm text-muted">{d.certifications[i]}</p></div>
-            </div>
-          ))}
-        </div>
-      )}
-      {show.approvals && (
-        <div class="mt-6 grid gap-6 md:grid-cols-3">
-          {d.approvals.map((ap) => (
-            <div class="flex gap-3 rounded-xl border border-line bg-white p-5">
-              <Icon name="shield" class="h-6 w-6 shrink-0 text-teal-600" />
-              <div><p class="text-sm font-bold text-navy-900">{ap.title}</p><p class="mt-1 text-xs text-muted">{ap.detail}</p></div>
-            </div>
-          ))}
-        </div>
-      )}
-      <div class="mt-10 text-center"><a href={link(lang, '/licences')} class="btn btn-dark">{d.nav.licences}</a></div>
     </div>
   </section>
 

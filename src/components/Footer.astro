@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { contact, registration, show, whatsappLink } from '../data/site';
+import { contact, show, whatsappLink } from '../data/site';
 import { getServices } from '../data/services';
 import { t, link, type Lang } from '../i18n/utils';
 
@@ -12,8 +12,8 @@ const services = getServices(lang);
 const year = new Date().getFullYear();
 const c = d.common.comma;
 const companyLinks = [
-  ['/about', d.nav.aboutUs], ['/leadership', d.nav.leadership], ['/licences', d.nav.licences], ['/hse', d.nav.hse],
-  ...(show.projects ? [['/projects', d.nav.projects]] : []), ['/careers', d.nav.careers], ['/company-profile', d.nav.profile],
+  ['/about', d.nav.aboutUs], ['/services', d.nav.services], ['/hse', d.nav.hse],
+  ...(show.projects ? [['/projects', d.nav.projects]] : []), ['/company-profile', d.nav.profile], ['/contact', d.nav.contact],
 ];
 ---
 <footer class="bg-navy-950 text-white/70">
@@ -51,7 +51,7 @@ const companyLinks = [
   <div class="border-t border-white/10">
     <div class="container-x flex flex-col gap-2 py-6 text-xs text-white/50 md:flex-row md:items-center md:justify-between">
       <p>© {year} {d.company.legalName}. {d.common.rights}</p>
-      <p>{d.common.licenceShort(registration.tradeLicenceNo)} · {d.common.crShort(registration.commercialRegisterNo)}{registration.vatTrn && ` · ${d.common.trn} ${registration.vatTrn}`}</p>
+      <p>{d.address.city}{c}{d.address.country}</p>
     </div>
   </div>
 </footer>
