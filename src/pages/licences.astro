@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Icon from '../components/Icon.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { company, registration, approvals, certifications, insurance, contact } from '../data/site';
+
+const rows = [
+  ['Registered name', company.legalName],
+  ['Registered name (Arabic)', company.legalNameAr],
+  ['Legal form', registration.legalForm],
+  ['Trade licence number', registration.tradeLicenceNo],
+  ['Licence type', registration.licenceType],
+  ['Issuing authority', registration.issuingAuthority],
+  ['Date of issue', registration.licenceIssued],
+  ['Valid until', registration.licenceExpiry],
+  ['VAT registration (TRN)', registration.vatTrn],
+  ['Chamber of Commerce', registration.chamberMembership],
+  ['Registered office', `${contact.address.line1}, ${contact.address.line2}, ${contact.address.city}, UAE`],
+  ['Office tenancy', registration.ejari],
+];
+
+const docs = ['Trade Licence (DET)', 'VAT Registration Certificate', 'Memorandum of Association', 'ISO 9001 / 14001 / 45001 Certificates', 'Insurance Certificates', 'Dubai Municipality Approvals', 'Company Profile', 'HSE Policy & Manual'];
+---
+<Base title="Licences & Compliance" description="Trade licence, VAT registration, Dubai Municipality approvals, ISO certifications and insurance of Bab Al Hidaya.">
+  <PageHero eyebrow="Licences & compliance" title="Fully licensed, registered and insured" subtitle="Our registration details are published openly. Copies of all documents are available to clients, banks and procurement teams on request." crumbs={[{ label: 'About', href: '/about' }, { label: 'Licences & Compliance' }]} />
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-7">
+        <SectionHead eyebrow="Company registration" title="Legal & commercial registration" />
+        <dl class="mt-8 overflow-hidden rounded-xl border border-line">
+          {rows.map(([k, v], i) => (
+            <div class:list={['grid gap-1 px-5 py-4 sm:grid-cols-5 sm:gap-4', i % 2 === 0 ? 'bg-mist' : 'bg-white']}>
+              <dt class="text-sm font-medium text-muted sm:col-span-2">{k}</dt>
+              <dd class="text-sm font-semibold text-navy-900 sm:col-span-3" dir={k.includes('Arabic') ? 'rtl' : undefined}>{v}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <div class="lg:col-span-5">
+        <div class="rounded-xl bg-navy-900 p-6 text-white">
+          <h3 class="font-bold text-white">Licensed activities</h3>
+          <p class="mt-1 text-xs text-white/60">As listed on trade licence no. {registration.tradeLicenceNo}</p>
+          <ul class="mt-5 space-y-3">
+            {registration.registeredActivities.map((a) => (
+              <li class="flex gap-2 text-sm"><Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />{a}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-mist">
+    <div class="container-x">
+      <SectionHead eyebrow="Government approvals" title="Regulatory approvals" />
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        {approvals.map((a) => (
+          <div class="card">
+            <span class="icon-tile"><Icon name="shield" /></span>
+            <h3 class="mt-4 font-bold">{a.title}</h3>
+            <p class="mt-2 text-sm text-muted">{a.detail}</p>
+            <p class="mt-4 text-xs font-semibold text-teal-600">Ref. {a.ref}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-2">
+      <div>
+        <SectionHead eyebrow="Certifications" title="ISO management systems" lead="Certified by an accredited third-party certification body and audited annually." />
+        <div class="mt-8 space-y-4">
+          {certifications.map((c) => (
+            <div class="flex items-center gap-4 rounded-xl border border-line p-5">
+              <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-gold-500 font-display text-xs font-extrabold text-navy-900">ISO</div>
+              <div><p class="font-bold text-navy-900">{c.code}</p><p class="text-sm text-muted">{c.name}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <SectionHead eyebrow="Insurance" title="Insurance cover" lead="Policies held with UAE-licensed insurers." />
+        <div class="mt-8 overflow-hidden rounded-xl border border-line">
+          {insurance.map((p, i) => (
+            <div class:list={['flex flex-col justify-between gap-1 px-5 py-4 sm:flex-row', i % 2 === 0 ? 'bg-mist' : 'bg-white']}>
+              <span class="text-sm font-semibold text-navy-900">{p.type}</span>
+              <span class="text-sm text-muted">{p.cover}</span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-4 text-sm text-muted">Payroll processed through the UAE Wage Protection System (WPS). All staff hold valid UAE residence and labour permits.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-mist">
+    <div class="container-x">
+      <SectionHead eyebrow="Due diligence" title="Documents available on request" lead="For vendor registration, tenders, banking and investment due diligence, contact us and we will share certified copies." />
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {docs.map((d) => (
+          <div class="flex items-center gap-3 rounded-lg border border-line bg-white p-4 text-sm font-medium text-navy-900"><Icon name="doc" class="h-5 w-5 text-teal-600" />{d}</div>
+        ))}
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={`mailto:${contact.email}?subject=Document%20request`} class="btn btn-dark">Request documents</a>
+        <a href="/company-profile" class="btn btn-outline">View company profile</a>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

@@ -1,0 +1,17 @@
+---
+interface Props { light?: boolean }
+const { light = false } = Astro.props;
+---
+<a href="/" class="flex items-center gap-3" aria-label="Bab Al Hidaya, home">
+  <!-- Placeholder mark: an arched doorway ("Bab" = door). Replace with the client's logo. -->
+  <svg viewBox="0 0 40 40" class="h-10 w-10 shrink-0" aria-hidden="true">
+    <rect width="40" height="40" rx="8" fill="#0b2545" />
+    <path d="M11 32V18a9 9 0 0 1 18 0v14" fill="none" stroke="#c9a227" stroke-width="2.5" />
+    <path d="M16 32V19.5a4 4 0 0 1 8 0V32" fill="none" stroke="#14968c" stroke-width="2.5" />
+    <path d="M8 32h24" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+  </svg>
+  <span class="leading-tight">
+    <span class:list={['block font-display text-lg font-extrabold tracking-wide', light ? 'text-white' : 'text-navy-900']}>BAB AL HIDAYA</span>
+    <span class:list={['block text-[10px] font-medium uppercase tracking-[0.2em]', light ? 'text-white/60' : 'text-muted']}>Maintenance &amp; Cleaning</span>
+  </span>
+</a>

@@ -1,0 +1,17 @@
+---
+import { contact, whatsappLink } from '../data/site';
+interface Props { title?: string; text?: string }
+const { title = 'Need a maintenance or cleaning partner you can rely on?', text = 'Book a free site survey. We will assess your property and send a detailed proposal within 48 hours.' } = Astro.props;
+---
+<section class="no-print bg-teal-600">
+  <div class="container-x flex flex-col items-start justify-between gap-6 py-12 md:flex-row md:items-center">
+    <div>
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">{title}</h2>
+      <p class="mt-2 max-w-2xl text-white/85">{text}</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <a href="/contact#quote" class="btn btn-primary">Request a Quote</a>
+      <a href={whatsappLink()} target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp {contact.mobile}</a>
+    </div>
+  </div>
+</section>
