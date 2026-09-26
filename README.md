@@ -47,8 +47,10 @@ info@babalhidaya.com), office map pin, hours (Mon–Sat 8 AM – 8 PM), services
 deliberately **not** shown on the website.
 
 - [x] `babalhidaya.com` bought (GoDaddy); indexing on, sitemap at `/sitemap-index.xml`
-- [ ] Connect the domain in Netlify (DNS at GoDaddy: `A @ → 75.2.60.5`, `CNAME www → <site>.netlify.app`)
-- [ ] Create the `info@babalhidaya.com` mailbox
+- [x] Domain connected to Netlify (DNS at GoDaddy: `A @ → 75.2.60.5`, `CNAME www → bab-al-hidaya.netlify.app`)
+- [x] `info@babalhidaya.com` mailbox (GoDaddy email: MX `secureserver.net`, SPF and DMARC set)
+- [x] Google Search Console verification TXT record added
+- [ ] Confirm the Let's Encrypt certificate is active (padlock on https://babalhidaya.com), then submit the sitemap in Search Console
 - [ ] Headline figures in `statValues` (`src/data/site.ts`) are estimates: confirm with the client
 - [ ] Real photos to replace stock photos in `public/images/`
 - [ ] Optional sections in `show` (projects, testimonials, HSE figures) only with real content
