@@ -26,7 +26,7 @@ const en = {
     menuOpen: 'Open menu',
     waDefault: 'Hello Bab Al Hidaya, I would like to know your charges and get a quotation.',
     waService: (s: string) => `Hello, I would like a quotation for ${s}.`,
-    emergency: 'Mon–Sat, 8:00 AM – 8:00 PM',
+    emergency: 'Sat–Thu, 10 AM – 8 PM · Friday closed',
     ctaTitle: 'Need cleaners or technicians? Ask for our rates.',
     ctaText: 'Tell us what you need (by the hour, day, week or month, or a yearly contract) and we will send you prices and a quotation, usually the same day.',
     footerServices: 'Services',
@@ -56,8 +56,9 @@ const en = {
   },
 
   hours: [
-    { days: 'Monday – Saturday', time: '8:00 AM – 8:00 PM' },
-    { days: 'Sunday', time: 'Closed' },
+    { days: 'Monday – Thursday', time: '10:00 AM – 8:00 PM' },
+    { days: 'Friday', time: 'Closed' },
+    { days: 'Saturday – Sunday', time: '10:00 AM – 8:00 PM' },
   ],
 
 

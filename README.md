@@ -41,7 +41,7 @@ Each route in `src/pages/` and `src/pages/ar/` is a thin wrapper around a view i
 ## Go-live checklist
 
 Confirmed by the client (Sept 2026): contacts (WhatsApp +971 54 214 3054, landline +971 6 521 7126,
-info@babalhidaya.com), office map pin, hours (Mon–Sat 8 AM – 8 PM), services, quote-only pricing, payment methods.
+info@babalhidaya.com), office map pin, hours (Mon–Thu & Sat–Sun 10 AM – 8 PM, Friday closed), services, quote-only pricing, payment methods.
 
 **Privacy rule:** licence/registration numbers, owner details, VAT and other legal information are
 deliberately **not** shown on the website.
