@@ -46,8 +46,9 @@ info@babalhidaya.com), office map pin, hours (Mon–Sat 8 AM – 8 PM), services
 **Privacy rule:** licence/registration numbers, owner details, VAT and other legal information are
 deliberately **not** shown on the website.
 
-- [ ] Buy `babalhidaya.com` (and ideally `.ae`), create the `info@` mailbox, connect the domain in Netlify
-- [ ] Then set `allowIndexing = true` in `src/data/site.ts` and `SITE_URL` in Netlify
+- [x] `babalhidaya.com` bought (GoDaddy); indexing on, sitemap at `/sitemap-index.xml`
+- [ ] Connect the domain in Netlify (DNS at GoDaddy: `A @ → 75.2.60.5`, `CNAME www → <site>.netlify.app`)
+- [ ] Create the `info@babalhidaya.com` mailbox
 - [ ] Headline figures in `statValues` (`src/data/site.ts`) are estimates: confirm with the client
 - [ ] Real photos to replace stock photos in `public/images/`
 - [ ] Optional sections in `show` (projects, testimonials, HSE figures) only with real content
@@ -62,13 +63,19 @@ cleaning sparkle. Colours: navy `#0B2545`, gold `#C9A227`, teal `#14968C`.
 
 `netlify.toml` holds the build settings. Connect the repo in Netlify and it builds automatically:
 English at `/`, Arabic at `/ar/`, both from one site. Every push to the production branch redeploys.
-Set `SITE_URL` (e.g. `https://babalhidaya.netlify.app`, later `https://babalhidaya.ae`) under
-*Site configuration → Environment variables* so canonical and hreflang links use the right domain.
+`SITE_URL` defaults to `https://babalhidaya.com` (in `astro.config.mjs`), so no environment variable is needed.
 
 ## Custom domain
 
-In Netlify: *Domain management → Add a domain* → `babalhidaya.ae`, then add `babalhidaya.com` as a domain alias
-(Netlify redirects it to the primary). HTTPS certificates are issued automatically.
+Primary domain `babalhidaya.com`, DNS kept at GoDaddy:
+
+| Type | Name | Value |
+|---|---|---|
+| A | `@` | `75.2.60.5` (Netlify load balancer) |
+| CNAME | `www` | `<site-name>.netlify.app` |
+
+In Netlify: *Domain management → Add a domain* → `babalhidaya.com` (www is added and redirected automatically),
+then *HTTPS → Verify DNS configuration*. Let's Encrypt certificates are issued automatically.
 
 ## Roadmap
 

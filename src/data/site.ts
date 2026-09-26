@@ -12,7 +12,7 @@
 export const isSampleData = false;
 
 /** Search-engine indexing. Switch on once the site runs on its own domain. */
-export const allowIndexing = false;
+export const allowIndexing = true;
 
 export const company = {
   founded: 2026,
